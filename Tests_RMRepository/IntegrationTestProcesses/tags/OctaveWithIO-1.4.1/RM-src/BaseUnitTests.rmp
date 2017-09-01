@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.1.017">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.1.017" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="409" width="614">
+      <operator activated="true" class="read_csv" compatibility="5.1.017" expanded="true" height="60" name="Read CSV" width="90" x="45" y="30">
+        <parameter key="csv_file" value="D:\code\DataMining\RapidMinerRepository\6. Octave extension\OctaveWithIO\trunk\RM-test-data\Generated-data.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character_for_quotes" value="\"/>
+        <parameter key="skip_comments" value="false"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="SYSTEM"/>
+        <list key="data_set_meta_data_information"/>
+        <parameter key="read_not_matching_values_as_missings" value="true"/>
+        <parameter key="datamanagement" value="double_array"/>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="76" name="base io tests" width="90" x="180" y="30">
+        <process expanded="true" height="353" width="299">
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="InputCell" width="90" x="45" y="30">
+            <parameter key="script" value="disp(&quot;***************** [IO-1] Test the ExempleSet with cell type*****************&quot;)&#10;Out=In;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="InputStruct" width="90" x="179" y="30">
+            <parameter key="script" value="disp(&quot;***************** [IO-2] Test the ExempleSet with structe type*****************&quot;)&#10;Out=In;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="InputCell" to_port="input 1"/>
+          <connect from_op="InputCell" from_port="output 1" to_op="InputStruct" to_port="input 1"/>
+          <connect from_op="InputStruct" from_port="output 1" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="76" name="m support files tests" width="90" x="313" y="30">
+        <process expanded="true" height="409" width="624">
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestStructConversion (2)" width="90" x="112" y="30">
+            <parameter key="script" value="disp(&quot;***************** [M-0] Check that the support functions are in path *****************&quot;)&#10;path()&#10;&#10;disp(&quot;***************** [M-1] Test get data for the structe ExempleSet*****************&quot;)&#10;%save(&quot;-mat&quot;,&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\Newtest.mat&quot;,&quot;In&quot;);&#10;&#10;[name role data varargout]=GetDataFromStruct(In)&#10;&#10;disp(&quot;***************** [M-1] Make data to the struct *****************&quot;)&#10;&#10;StructData = MakeDataToStruct(data ,name,role);&#10;&#10;&#10;Out=StructData;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestCellConversion" width="90" x="313" y="30">
+            <parameter key="script" value="disp(&quot;***************** [M-2]Test get data for the cell ExempleSet*****************&quot;)&#10;&#10;[name role data]=GetDataFromCell(In);&#10;role&#10;disp(&quot;***************** [M-2] Make data to the cell *****************&quot;)&#10;&#10;CellData= MakeDataToCell(data,name,role);&#10;&#10;Out=CellData;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestStruct2Cell" width="90" x="112" y="165">
+            <parameter key="script" value="disp(&quot;********** [M-3] Test Struct to cell conversion***************&quot;)&#10;&#10;disp(&quot; 1st: Conver the input exempleset data struct to Cell &quot;)&#10;[OutputCell]=ConverStructToCell(In);&#10;&#10;disp(&quot; 2nd: get the data from cell converged &quot;)&#10;[name1 role1 data1]=GetDataFromCell(OutputCell);&#10;&#10;disp(&quot; 3rd: Make data outptu&quot;)&#10;CellData= MakeDataToStruct(data1,name1,role1);&#10;Out=CellData;&#10;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestCell2Struct" width="90" x="313" y="165">
+            <parameter key="script" value="%addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;&#10;disp(&quot;********** [M-4] Test cell to Struct conversion***************&quot;)&#10;&#10;disp(&quot; 1st: Conver the input exempleset data Cell to struct &quot;)&#10;[OutputStruct]=ConverCellToStruct(In);&#10;&#10;disp(&quot; 2nd: get the data from struct converged &quot;)&#10;[name1 role1 data1]=GetDataFromStruct(OutputStruct);&#10;&#10;disp(&quot; 3rd: Make data outptu&quot;)&#10;StructData= MakeDataToCell(data1,name1,role1);&#10;&#10;Out=StructData;&#10;&#10;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="TestStructConversion (2)" to_port="input 1"/>
+          <connect from_op="TestStructConversion (2)" from_port="output 1" to_op="TestCellConversion" to_port="input 1"/>
+          <connect from_op="TestCellConversion" from_port="output 1" to_op="TestStruct2Cell" to_port="input 1"/>
+          <connect from_op="TestStruct2Cell" from_port="output 1" to_op="TestCell2Struct" to_port="input 1"/>
+          <connect from_op="TestCell2Struct" from_port="output 1" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestSaveAndLoad" width="90" x="45" y="165">
+        <parameter key="script" value="%addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;&#10;disp(&quot;************* [SL] Test: Save and load ******************&quot;)&#10;&#10;disp(&quot;--saving In as the SaveTestUUID.mat&quot;)&#10;save(&quot;&lt;Rapidminer_Directory&gt;\\SaveTest.mat&quot;,&quot;In&quot;);&#10;&#10;disp(&quot;--clearing the variable in memory&quot;)&#10;clear&#10;&#10;disp(&quot;--loading In from SaveTest.mat&quot;)&#10;var=whos(&quot;-file&quot;, &quot;&lt;Rapidminer_Directory&gt;\\SaveTest.mat&quot;);&#10;load(&quot;&lt;Rapidminer_Directory&gt;\\SaveTest.mat&quot;, var(1).name);&#10;&#10;Out=In;&#10;disp(&quot;--cleaning SaveTest.mat&quot;)&#10;unlink(&quot;&lt;Rapidminer_Directory&gt;\\SaveTest.mat&quot;)"/>
+        <list key="inputs">
+          <parameter key="In" value="struct"/>
+        </list>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="76" name="role tests" width="90" x="313" y="165">
+        <process expanded="true" height="280" width="614">
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestRolewithStruct" width="90" x="45" y="30">
+            <parameter key="script" value="&#10;disp(&quot;********** [Role-1] Test the cell data with role id***************&quot;)&#10;&#10;load(&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\RM-test-data\\DataCellRole.mat&quot;);&#10;&#10;[name role data levelname subdata datacomplet]=GetDataFromCell(DD);&#10;&#10;StructData= MakeDataToStruct(datacomplet,name,role,levelname);&#10;&#10;Out=StructData;&#10;&#10;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestRolewithCell" width="90" x="179" y="30">
+            <parameter key="script" value="&#10;disp(&quot;********** [Role-2]Test the Cell data with role id***************&quot;)&#10;&#10;&#10;[name role data levelname subdata datacomplet]=GetDataFromCell(In);&#10;CellData= MakeDataToCell(datacomplet,name,role,levelname);&#10;&#10;Out=CellData;&#10;&#10;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestMulti-RolewithCell" width="90" x="45" y="120">
+            <parameter key="script" value="&#10;load(&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\RM-test-data\\NewWeekS.mat&quot;);&#10;disp(&quot;********** [Role-3]Test the Struct data with all role ***************&quot;)&#10;&#10;[name role data levelname subdata datacomplet]=GetDataFromStruct(InputS);&#10;&#10;StructData= MakeDataToStruct(datacomplet,name,role,levelname);&#10;&#10;Out=StructData;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.3.001" expanded="true" height="76" name="TestMulti-RolewithStruct" width="90" x="179" y="120">
+            <parameter key="script" value="&#10;load(&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\RM-test-data\\NewWeekC.mat&quot;);&#10;&#10;disp(&quot;********** [Role-4]Test the Cell data with all role ***************&quot;)&#10;&#10;[name role data levelname subdata datacomplet]=GetDataFromCell(InputC);&#10;CellData= MakeDataToCell(datacomplet,name,role,levelname);&#10;&#10;Out=CellData;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="TestRolewithStruct" to_port="input 1"/>
+          <connect from_op="TestRolewithStruct" from_port="output 1" to_op="TestRolewithCell" to_port="input 1"/>
+          <connect from_op="TestRolewithCell" from_port="output 1" to_op="TestMulti-RolewithCell" to_port="input 1"/>
+          <connect from_op="TestMulti-RolewithCell" from_port="output 1" to_op="TestMulti-RolewithStruct" to_port="input 1"/>
+          <connect from_op="TestMulti-RolewithStruct" from_port="output 1" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Read CSV" from_port="output" to_op="base io tests" to_port="in 1"/>
+      <connect from_op="base io tests" from_port="out 1" to_op="m support files tests" to_port="in 1"/>
+      <connect from_op="m support files tests" from_port="out 1" to_op="TestSaveAndLoad" to_port="input 1"/>
+      <connect from_op="TestSaveAndLoad" from_port="output 1" to_op="role tests" to_port="in 1"/>
+      <connect from_op="role tests" from_port="out 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

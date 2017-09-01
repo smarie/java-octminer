@@ -1,0 +1,264 @@
+# Created by Octave 3.6.1, Thu Jul 26 19:05:20 2012 Romance Daylight Time <unknown@WXFRB0475L>
+# name: e
+# type: scalar struct
+# ndims: 2
+ 1 1
+# length: 3
+# name: message
+# type: sq_string
+# elements: 1
+# length: 44
+`actxserver' undefined near line 97 column 9
+
+
+# name: identifier
+# type: sq_string
+# elements: 0
+
+
+# name: stack
+# type: struct
+# ndims: 2
+ 6 1
+# length: 6
+# name: file
+# type: cell
+# rows: 6
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 88
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\packages\io-1.0.17\chk_spreadsheet_support.m
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 70
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\packages\io-1.0.17\PKG_ADD
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 61
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\3.6.1\m\pkg\pkg.m
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 61
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\3.6.1\m\pkg\pkg.m
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 61
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\3.6.1\m\pkg\pkg.m
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 68
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\3.6.1\m\startup/octaverc
+
+
+
+
+
+# name: name
+# type: cell
+# rows: 6
+# columns: 1
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 23
+chk_spreadsheet_support
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 70
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\packages\io-1.0.17\PKG_ADD
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 34
+pkg>load_packages_and_dependencies
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 17
+pkg>load_packages
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 3
+pkg
+
+
+# name: <cell-element>
+# type: sq_string
+# elements: 1
+# length: 68
+D:\Octave\Octave3.6.1_gcc4.6.2\share\octave\3.6.1\m\startup/octaverc
+
+
+
+
+
+# name: line
+# type: cell
+# rows: 6
+# columns: 1
+# name: <cell-element>
+# type: scalar
+97
+
+
+# name: <cell-element>
+# type: scalar
+10
+
+
+# name: <cell-element>
+# type: scalar
+2350
+
+
+# name: <cell-element>
+# type: scalar
+2140
+
+
+# name: <cell-element>
+# type: scalar
+401
+
+
+# name: <cell-element>
+# type: scalar
+20
+
+
+
+
+
+# name: column
+# type: cell
+# rows: 6
+# columns: 1
+# name: <cell-element>
+# type: scalar
+7
+
+
+# name: <cell-element>
+# type: scalar
+16
+
+
+# name: <cell-element>
+# type: scalar
+5
+
+
+# name: <cell-element>
+# type: scalar
+1
+
+
+# name: <cell-element>
+# type: scalar
+7
+
+
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: scope
+# type: cell
+# rows: 6
+# columns: 1
+# name: <cell-element>
+# type: scalar
+163
+
+
+# name: <cell-element>
+# type: scalar
+1
+
+
+# name: <cell-element>
+# type: scalar
+44
+
+
+# name: <cell-element>
+# type: scalar
+34
+
+
+# name: <cell-element>
+# type: scalar
+3
+
+
+# name: <cell-element>
+# type: scalar
+1
+
+
+
+
+
+# name: context
+# type: cell
+# rows: 6
+# columns: 1
+# name: <cell-element>
+# type: scalar
+0
+
+
+# name: <cell-element>
+# type: scalar
+0
+
+
+# name: <cell-element>
+# type: scalar
+0
+
+
+# name: <cell-element>
+# type: scalar
+0
+
+
+# name: <cell-element>
+# type: scalar
+0
+
+
+# name: <cell-element>
+# type: scalar
+0

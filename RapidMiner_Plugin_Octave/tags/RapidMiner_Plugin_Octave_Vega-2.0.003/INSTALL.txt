@@ -1,0 +1,27 @@
+RAPID MINER OCTAVE EXTENSION INSTALLATION NOTES
+-----------------------------------------------
+
+Preferred installation should be from Rapidminer update mechanisms and marketplace.
+
+For manual installation from the sources, you also need to checkout Rapidminer sources.
+Perform the following steps:
+
+0. Checkout Rapidminer and the octave extension independently in your current folder
+
+	svn co https://svn.java.net/svn/octminer~svnrepository/RapidMiner_Vega/trunk RapidMiner_Vega
+	svn co https://svn.java.net/svn/octminer~svnrepository/RapidMiner_Plugin_Octave_Vega/trunk RapidMiner_Plugin_Octave_Vega
+
+	You should now have two folders: 
+			RapiMiner_Vega/ 
+			and 
+			RapidMiner_Plugin_Octave_Vega/
+
+1. You can compile the sources using 'ant build' or 'ant dist'. Ant is a 
+   java build tool (like 'make') and can be downloaded from 
+   http://jakarta.apache.org/ant/. RapidMiner requires Ant version 1.6 or 
+   higher. 
+
+
+
+2. Simply copy the <plugin_name>.jar file to the directory lib/plugins of your RapidMiner
+

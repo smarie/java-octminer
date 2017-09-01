@@ -1,0 +1,70 @@
+<project name="JavaOctaveHacked" basedir="." default="jar">
+
+	<property name="src" value="src" />
+	<property name="output" value="target" />
+	<property name="extension.dir" value="../RapidMiner_Plugin_Octave_Vega"/>
+	<property name="joHacked.version" value="0.6.5-SNAPSHOT"/>
+	
+	<path id="lib">
+		<fileset dir="${basedir}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- ================================= 
+		      targets: clean and create              
+		================================= -->
+	<target name="clean">
+		<delete dir="${output}" />
+	</target>
+
+	<target name="create" depends="clean">
+		<mkdir dir="${output}" />
+	</target>
+
+	<!-- ================================= 
+	          target: compile              
+	   ================================= -->
+	<target name="compile" depends="create">
+		<unjar dest="${output}">
+			<fileset dir="${basedir}/lib" includes="**/javaoctave-0.6.1.jar" />
+		</unjar>
+
+		<javac debug="true" destdir="${output}">
+			<src path="${src}" />
+			<classpath refid="lib" />
+		</javac>
+
+		<copy todir="${output}">
+			<fileset dir="${basedir}/resources">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<!-- ================================= 
+          target: jar              
+       ================================= -->
+	<target name="jar" depends="compile">
+
+		<jar destfile="${output}/javaoctave-HACKED-${joHacked.version}.jar">
+			<fileset dir="${output}" />
+		</jar>
+	</target>
+
+	<!-- ================================= 
+	          target: deploy .        
+	   ================================= -->
+	<target name="deploy" depends="jar" description="Deploys the jar to the Octave extension source folder to replace previously used one.">
+		<delete>
+			<fileset dir="${extension.dir}/lib">
+			    <include name="javaoctave*.jar"/>
+			</fileset>
+		</delete>
+		
+		<copy todir="${extension.dir}/lib" file="${output}/javaoctave-HACKED-${joHacked.version}.jar"/>
+
+	</target>
+
+</project>

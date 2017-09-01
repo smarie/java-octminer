@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<operatorHelp lang="en_EN">
+	<group>
+		<key>octave</key>
+		<name>Octave extension operators</name>
+	</group>
+	<operator>
+		<key>octave_script_op</key>
+		<shortName>OctaveScript</shortName>
+		<name>Octave Script Operator</name>
+		<synopsis>Allows to execute an octave script.
+		</synopsis>
+		<help>&lt;p&gt; You can write any octave code in the operator script.
+			The input exampleSets are translated either into a structure or into
+			a cell, according to the parameter. Output exampleSets are translated
+			back with the same format. In order to be able to call m-files, you
+			might want to either use addpath() + any function name (recommended).
+			Or alternatively use source(). &lt;br/&gt;
+			Zhang, Y., and Marié, S.,
+			(2012). &lt;/p&gt; </help>
+	</operator>
+</operatorHelp>

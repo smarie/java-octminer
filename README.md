@@ -1,2 +1,2 @@
 # java-octminer
-An octave extension for Rapidminer 5, formerly hosted at https://svn.java.net/svn/octminer~svnrepository
+An octave extension for Rapidminer 5, formerly hosted at https://svn.java.net/svn/octminer~svnrepository. An octave extension for Rapidminer 5, formerly hosted at https://svn.java.net/svn/octminer~svnrepository. This is therefore a simple copy of the SVN repository for reference. Feel free to propose pull requests to port it to rapidminer 6 and to move to a proper Git repository structure !

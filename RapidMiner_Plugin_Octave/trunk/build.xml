@@ -1,0 +1,94 @@
+<project name="RapidMiner_Plugin_Octave_Unuk" default="installproper">
+	
+	<description>Build file for the RapidMiner Octave extension</description>
+
+	<property name="rm.dir" location="../RapidMiner_Unuk" />
+
+	<property name="build.build" location="build" />
+	<property name="build.resources" location="resources" />
+	<property name="build.lib" location="lib" />
+
+	<property name="check.sources" location = "src" />
+	
+	<property name="javadoc.targetDir" location="javadoc" />
+
+	<property name="extension.name" value="octminer" />
+	<property name="extension.name.long" value="RapidMiner Octave Extension" />
+	<property name="extension.namespace" value="octave" />
+	<property name="extension.vendor" value="Schneider Electric Industries" />
+    <property name="extension.admin" value="Sylvain Marié" />
+	<property name="extension.url" value="http://java.net/projects/octminer" />
+
+	<property name="extension.needsVersion" value="5.1" />
+	<property name="extension.dependencies" value="" />
+
+	<property name="extension.initClass" value="com.rapidminer.PluginInitOctaveExtension" />
+	<property name="extension.objectDefinition" value="/com/rapidminer/resources/ioobjectsOctaveExtension.xml" />
+	<property name="extension.operatorDefinition" value="/com/rapidminer/resources/OperatorsOctaveExtension.xml" />
+	<property name="extension.parseRuleDefinition" value="/com/rapidminer/resources/parserulesOctaveExtension.xml" />
+	<property name="extension.groupProperties" value="/com/rapidminer/resources/groupsOctaveExtension.properties" />
+	<property name="extension.errorDescription" value="/com/rapidminer/resources/i18n/ErrorsOctaveExtension" />
+	<property name="extension.userErrors" value="/com/rapidminer/resources/i18n/UserErrorMessagesOctaveExtension.properties" />
+	<property name="extension.guiDescription" value="/com/rapidminer/resources/i18n/GUIOctaveExtension.properties" />
+
+	
+	<!-- Src files -->
+	<path id="build.sources.path">
+		<dirset dir="src">
+			<include name="**" />
+		</dirset>
+	</path>
+	<fileset dir="src" id="build.sources">
+		<include name="**/*.java" />
+	</fileset>
+	<fileset id="build.dependentExtensions" dir="..">
+        <exclude name="**/*"/>
+	</fileset>
+
+	<import file="${rm.dir}/build_extension.xml" />
+	
+	<!-- ================================= 
+          target: PREBUILD              
+         ================================= -->
+	<target name="prebuild" description="removes old plugin versions from RM installation">
+		<delete>
+			<fileset dir="${rm.dir}\lib\plugins" id="OldPluginJars">
+				<include name="rapidminer-${extension.name}-*.jar"/>
+			</fileset>
+		</delete>
+		<delete>
+			<fileset dir="${rm.dir}\release" id="OldPluginJars2">
+				<include name="rapidminer-${extension.name}-*.jar"/>
+			</fileset>
+		</delete>
+	</target>
+	
+	<!-- ================================= 
+	          target: installproper              
+	     ================================= -->
+    <target name="installproper" depends="prebuild,install" description="performs everything">
+    	
+    	<delete dir="target"/>
+    	<mkdir dir="target"/>
+    	<copy todir="target">
+    		<fileset dir="${rm.dir}\lib\plugins" id="NewPluginJar">
+			    <include name="rapidminer-${extension.name}-*.jar"/>
+			</fileset>
+        </copy>
+    </target>
+	
+	<!-- ================================= 
+		          target: releaseproper              
+		================================= -->
+	<target name="releaseproper" depends="prebuild,release" description="releases everything">
+	    	
+	    	<delete dir="target"/>
+	    	<mkdir dir="target"/>
+	    	<copy todir="target">
+	    		<fileset dir="${rm.dir}\release" id="NewPluginJar">
+				    <include name="rapidminer-${extension.name}-*.jar"/>
+				</fileset>
+	        </copy>
+	    </target>
+	
+</project>

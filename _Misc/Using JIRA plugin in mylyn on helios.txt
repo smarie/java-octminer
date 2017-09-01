@@ -1,0 +1,14 @@
+On my installation I was missing two packages:
+- javax.xml.soap >> installing axis plugin in eclipse solves this problem
+- javax.wsdl 1.6 >> http://download.jboss.org/jbosstools/updates/requirements/orbit/R20100519200754/plugins/
+
+To configure the repository use server: https://java.net/jira
+(as mentioned in http://kenai.com/jira/browse/KENAI-2684)
+
+Also you need to uncheck "save password" otherwise you will get authentication problems
+(https://confluence.atlassian.com/display/IDEPLUGIN/Configuring+your+JIRA+Options+in+Eclipse)
+
+Finally once you've added the jira repository, remember to create a new query on it to declare what tasks youre interested in.
+
+General help on java.net + JIRA: 
+http://java.net/projects/help/pages/JiraIssueTracker

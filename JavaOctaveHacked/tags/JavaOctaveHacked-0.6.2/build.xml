@@ -1,0 +1,47 @@
+<project name="JavaOctaveHacked" basedir="." default="jar">
+	
+	    <property name="src" value="src"/>
+	    <property name="output" value="bin"/>
+	 
+	    <target name="compile" depends="create">
+	    	<unjar dest="${output}">
+	    	     <fileset dir="${basedir}/lib" includes="**/javaoctave-0.6.1.jar" />
+	    	</unjar>
+	    	
+	        <javac debug="true" destdir="${output}">            
+	            <src path="${src}"/>            
+	            <classpath refid="lib"/>
+	        </javac>
+	        
+	    	<copy todir="${output}">
+	    		<fileset dir="${basedir}/resources">
+	    		     <include name="**/*"/>
+	    		</fileset>
+	    	</copy>
+	        
+	    </target>
+	 
+	    <target name="jar" depends="compile">
+	    	
+	        <jar destfile="javaoctave-HACKED-0.6.2.jar">
+	            <fileset dir="${output}"/>
+	        </jar>
+	    </target>
+	 
+	 
+	    <target name="clean">
+	        <delete dir="${output}"/>
+	    </target>
+	 
+	    <target name="create" depends="clean">
+	        <mkdir dir="${output}"/>
+	    </target>
+	 
+	    <path id="lib">
+	        <fileset dir="${basedir}/lib">
+	            <include name="*.jar"/>
+	        </fileset>
+	    </path>
+	
+
+</project>

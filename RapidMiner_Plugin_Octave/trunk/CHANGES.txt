@@ -1,0 +1,122 @@
+from 2.2.3 to 2.2.4
+----------------------------------------------
+ * [FIX] Compatibility with RM 6.2
+ 
+from 2.2.2 to 2.2.3
+----------------------------------------------
+ * [NEW] now when there is a communication timeout with the octave process, the task is tried once more on the new octave engine before giving up.
+ 
+from 2.2.1 to 2.2.2
+----------------------------------------------
+ * [FIX] pool size increase is now taken into account immediately if the pool is started
+ * [FIX] pool size decrease now works correctly: the engine shuts down
+ 
+from 2.1.6 to 2.2.1
+----------------------------------------------
+ * [FIX] fixed a concurrency bug : when too many tasks were running in parallel, the same engine was being affected to two different operators. If these operators were using the same variable names for inputs or outputs, they were corrupting each other's variables.
+ * [NEW] added two properties to setup timeouts for octave operations. Therefore octave scripts can not lock the server anymore.
+
+from 2.1.5 to 2.1.6
+----------------------------------------------
+ * [FIX] now catching OctaveNonrecoverableException, replacing the corresponding engine with a new one, and automatically retrying execution once.
+ 
+from 2.1.4 to 2.1.5
+----------------------------------------------
+ * [FIX] Date truncation from OCTAVE, by re-rounding upwards at reception (parameter stays accessible to the expert)
+
+from 2.1.3 to 2.1.4
+----------------------------------------------
+* Fixed datetime conservion bug from octave to rapidminer (if the role is set to datetime in the struct/cell)
+
+from 2.1.2 to 2.1.3
+----------------------------------------------
+* Fixed logging issue: Octave now logs to rapidminer.
+
+from 2.1.1 to 2.1.2
+----------------------------------------------
+* fixed metadata generation : now dynamically constructing metadata from octave output (only for example sets for now)
+* Added a wizard to help finding octave at startup.
+* Fixed infinite join() bug when shutting down an octave engine (bug in javaoctave, new hacked version)
+
+from 2.0.004 to 2.1.1
+----------------------------------------------
+* Correctly handling DateTime attributes for export and import.
+* Added a warning if Octave version is not right
+* Fixed extension URL
+
+from 2.0.003 to 2.0.004
+------------------------------------------------
+* Fixed license
+
+
+from 2.0.002 to 2.0.003
+------------------------------------------------
+* Fixed error with large example sets and negative numbers
+  https://java.net/jira/browse/OCTMINER-2
+* Improved log entries to better understand what's happening
+
+
+from 2.0.001 to 2.0.002
+------------------------------------------------
+* First public version both in Java.net and in Rapidminer 
+  marketplace
+* Improved error messages. 
+* Handling the case when engines in the pool suddently crash 
+  and disappear.
+
+
+from 2.0.000 to 2.0.001
+------------------------------------------------
+* Fixed bug with dateTime attributes
+
+
+from 1.6 to 2.0.000
+------------------------------------------------
+* New version 2.0.0 of the support functions. 
+* New version 2.0.0 of the unit test process. 
+* Improved operator documentation. 
+* Fixed issue with support functions path sticking at old versions' - now always using the latest installed by default. 
+* Fixed issue with tag "Current_Directory" defaulting to wrong path.
+
+
+from 1.5 to 1.6
+------------------------------------------------
+* First public release [2012/07] on java.net
+* Fixed bugs and tested successfully on RapidAnalytics
+* Javadoc and license
+
+
+from 1.4 to 1.5
+------------------------------------------------
+(copied from previous SVN log)
+
+* change startup menu
+* error message fixed
+* icon octave
+* structure of code
+* fix: Bug with metadata checking occuring when multiple inputs
+* Attemps to fix log bug in Rapidanalytics
+
+
+from 1.2 to 1.4
+------------------------------------------------
+(copied from previous SVN log)
+
+General:
+
+* New version correctly handling multithread (concurrent access to Octave engine), thanks to a pool of Octave Engines of configurable size.
+* The (m-files) SupportFunctions are now automatically installed in <HOME_Directory>/RapidminerOctave and added to octave path at startup . 
+* Added configuration options for the octave engines (path for octave.exec, path for the support .m files, startup options) 
+
+OctaveOperator:
+
+* Added documentation for the OctaveScript operator
+* added the new <Current_Directory> and <Rapidminer_Directory> properties for save and load ;
+* Added an UUID for each run of an Octave Operator, 
+and the corresponding variable <UUID> can be used inside the OctaveScript 
+* Now correctly handling roles in data conversion
+
+from 0.1 to 1.2
+----------------------------------------
+
+(... in previous SVN log)

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.1.017">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.1.017" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="386" width="624">
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="load Data" width="90" x="45" y="255">
+        <parameter key="script" value="load(&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\WeeksOfData.mat&quot;);&#10;&#10;Out=WeeksOfData;"/>
+        <list key="inputs"/>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="multiply" compatibility="5.1.017" expanded="true" height="94" name="Multiply" width="90" x="45" y="75"/>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="TestCEA-Cell" width="90" x="179" y="30">
+        <parameter key="script" value="&#10;Out=InCell;"/>
+        <list key="inputs">
+          <parameter key="InCell" value="cell"/>
+        </list>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="OctaveScript" width="90" x="313" y="30">
+        <parameter key="script" value="addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\test\\m&quot;);&#10;&#10;disp(&quot;Test: Struct conversion&quot;)&#10;save(&quot;-mat&quot;,&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\InCell.mat&quot;,&quot;InCell&quot;);&#10;&#10;[name role data level]=GetDataFromCell(InCell);&#10;Matrix = WD_computeCID(data);&#10;[M N]=size(Matrix);&#10;idattribut=ones(M,1);&#10;&#10;num=size(level,1);&#10;rolecopy=level;&#10;&#10;for i=1:num+1&#10;rolecopy{i}='';&#10;end&#10;namecopy=level;&#10;namecopy{num+1}='Weeks';&#10;rolecopy{num+1}='id';&#10;&#10;CellData= MakeDataToCell(Matrix,namecopy,rolecopy,level);&#10;save(&quot;-mat&quot;,&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\CellData.mat&quot;,&quot;CellData&quot;);&#10;&#10;Output=CellData;"/>
+        <list key="inputs">
+          <parameter key="Input" value="cell"/>
+        </list>
+        <list key="results">
+          <parameter key="Output" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="ISOMAP Cell" width="90" x="447" y="30">
+        <parameter key="script" value="addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;&#10;[name role data level]=GetDataFromCell(DistanceMatrix);&#10;&#10;coord = processIsomap(data);&#10;[N M]=size(coord);&#10;&#10;weekid=name{end};&#10;&#10;for i=1:M&#10;attName= [ 'att' num2str(i)];&#10;name1{1,i}=attName;&#10;role1{1,i}=&quot;&quot;;&#10;end&#10;name1{1,M+1}=weekid;&#10;role1{1,M+1}='id';&#10;&#10;CellData= MakeDataToCell(coord);&#10;&#10;ISOMAP=CellData;"/>
+        <list key="inputs">
+          <parameter key="DistanceMatrix" value="cell"/>
+        </list>
+        <list key="results">
+          <parameter key="ISOMAP" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" breakpoints="before" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="TestCEA-Struct" width="90" x="179" y="120">
+        <parameter key="script" value="&#10;Out=InStruct;"/>
+        <list key="inputs">
+          <parameter key="InStruct" value="struct"/>
+        </list>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="OctaveScript (2)" width="90" x="313" y="120">
+        <parameter key="script" value="addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\test\\m&quot;);&#10;&#10;disp(&quot;Test: Struct conversion&quot;)&#10;%[OutputStructe]=ConverCellToStructe(InStruct)&#10;[name role data level]=GetDataFromStructe(InStruct);&#10;Matrix = WD_computeCID(data);&#10;[M N]=size(Matrix);&#10;idattribut=ones(M,1);&#10;&#10;num=size(level,1);&#10;rolecopy=level;&#10;namecopy=rolecopy&#10;&#10;for i=1:num+1&#10;rolecopy{i}='';&#10;end&#10;&#10;namecopy{num+1}='Weeks';&#10;rolecopy{num+1}='id';&#10;&#10;StructeData= MakeDataToStruct(Matrix,namecopy,rolecopy,level);&#10;save(&quot;-mat&quot;,&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\StructeData.mat&quot;,&quot;StructeData&quot;);&#10;&#10;&#10;&#10;Output=StructeData;"/>
+        <list key="inputs">
+          <parameter key="InStruct" value="struct"/>
+        </list>
+        <list key="results">
+          <parameter key="Output" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="ISOMAP Struct" width="90" x="447" y="120">
+        <parameter key="script" value="addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;&#10;[name role data level]=GetDataFromStructe(DistanceMatrix);&#10;&#10;coord = processIsomap(data);&#10;[N M]=size(coord);&#10;&#10;weekid=name{end};&#10;&#10;for i=1:M&#10;attName= [ 'att' num2str(i)];&#10;name1{1,i}=attName;&#10;role1{1,i}=&quot;&quot;;&#10;end&#10;name1{1,M+1}=weekid;&#10;role1{1,M+1}='id';&#10;&#10;StructeData= MakeDataToStruct(coord);&#10;&#10;ISOMAP=StructeData;"/>
+        <list key="inputs">
+          <parameter key="DistanceMatrix" value="struct"/>
+        </list>
+        <list key="results">
+          <parameter key="ISOMAP" value="Data Table"/>
+        </list>
+      </operator>
+      <connect from_op="load Data" from_port="output 1" to_op="Multiply" to_port="input"/>
+      <connect from_op="Multiply" from_port="output 1" to_op="TestCEA-Cell" to_port="input 1"/>
+      <connect from_op="Multiply" from_port="output 2" to_op="TestCEA-Struct" to_port="input 1"/>
+      <connect from_op="TestCEA-Cell" from_port="output 1" to_op="OctaveScript" to_port="input 1"/>
+      <connect from_op="OctaveScript" from_port="output 1" to_op="ISOMAP Cell" to_port="input 1"/>
+      <connect from_op="ISOMAP Cell" from_port="output 1" to_port="result 1"/>
+      <connect from_op="TestCEA-Struct" from_port="output 1" to_op="OctaveScript (2)" to_port="input 1"/>
+      <connect from_op="OctaveScript (2)" from_port="output 1" to_op="ISOMAP Struct" to_port="input 1"/>
+      <connect from_op="ISOMAP Struct" from_port="output 1" to_port="result 2"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+    </process>
+  </operator>
+</process>

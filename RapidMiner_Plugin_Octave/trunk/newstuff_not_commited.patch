@@ -1,0 +1,269 @@
+Index: .classpath
+===================================================================
+--- .classpath	(revision 100)
++++ .classpath	(working copy)
+@@ -5,6 +5,6 @@
+ 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+ 	<classpathentry combineaccessrules="false" kind="src" path="/RapidMiner_Unuk"/>
+ 	<classpathentry kind="lib" path="/RapidMiner_Unuk/lib/commons-logging-1.1.jar"/>
+-	<classpathentry kind="lib" path="lib/javaoctave-HACKED-0.6.8.jar"/>
++	<classpathentry kind="lib" path="lib/javaoctave-HACKED-0.6.9-SNAPSHOT.jar"/>
+ 	<classpathentry kind="output" path="build"/>
+ </classpath>
+Index: build.properties
+===================================================================
+--- build.properties	(revision 100)
++++ build.properties	(working copy)
+@@ -1,5 +1,5 @@
+ #Tue Dec 22 15:04:27 CET 2009
+ extension.version=2
+ extension.revision=2
+-extension.update=004
++extension.update=005
+ #SNAPSHOT
+Index: lib/javaoctave-HACKED-0.6.8.jar
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: lib/javaoctave-HACKED-0.6.8.jar
+===================================================================
+--- lib/javaoctave-HACKED-0.6.8.jar	(revision 100)
++++ lib/javaoctave-HACKED-0.6.8.jar	(nonexistent)
+
+Property changes on: lib/javaoctave-HACKED-0.6.8.jar
+___________________________________________________________________
+Deleted: svn:mime-type
+## -1 +0,0 ##
+-application/octet-stream
+\ No newline at end of property
+Index: lib/javaoctave-HACKED-0.6.9-SNAPSHOT.jar
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: lib/javaoctave-HACKED-0.6.9-SNAPSHOT.jar
+===================================================================
+--- lib/javaoctave-HACKED-0.6.9-SNAPSHOT.jar	(nonexistent)
++++ lib/javaoctave-HACKED-0.6.9-SNAPSHOT.jar	(working copy)
+
+Property changes on: lib/javaoctave-HACKED-0.6.9-SNAPSHOT.jar
+___________________________________________________________________
+Added: svn:mime-type
+## -0,0 +1 ##
++application/octet-stream
+\ No newline at end of property
+Index: src/com/rapidminer/operator/octave/OctaveScriptOperator.java
+===================================================================
+--- src/com/rapidminer/operator/octave/OctaveScriptOperator.java	(revision 100)
++++ src/com/rapidminer/operator/octave/OctaveScriptOperator.java	(working copy)
+@@ -76,6 +76,7 @@
+ import com.rapidminer.parameter.ParameterTypeDouble;
+ import com.rapidminer.parameter.ParameterTypeList;
+ import com.rapidminer.parameter.ParameterTypeString;
++import com.rapidminer.parameter.ParameterTypeStringCategory;
+ import com.rapidminer.parameter.ParameterTypeText;
+ import com.rapidminer.parameter.TextType;
+ import com.rapidminer.parameter.UndefinedParameterError;
+@@ -83,6 +84,7 @@
+ import com.rapidminer.repository.RepositoryException;
+ import com.rapidminer.repository.local.LocalRepository;
+ import com.rapidminer.tools.Tools;
++import com.rapidminer.tools.octave.ToolsPP;
+ import com.rapidminer.tools.octave.manager.OctaveConnectionManager;
+ import com.rapidminer.tools.octave.manager.OctaveEngineProxy;
+ import com.rapidminer.tools.octave.manager.pool.OctaveEngineJob;
+@@ -434,8 +436,8 @@
+ 
+         /* get the input parameter */
+         List<String[]> inputVariables = getParameterList(PARAMETER_INPUTS);
+-        TimeZone param_timeZone = Tools
+-                .getTimeZone(getParameterAsInt(PARAMETER_TARGET_TIME_ZONE));
++        TimeZone param_timeZone = ToolsPP.getTimeZoneFromEditableParameter(
++                this, PARAMETER_TARGET_TIME_ZONE);
+ 
+         /* for each object in the input */
+         int i = 0;
+@@ -741,9 +743,10 @@
+         types.add(type);
+ 
+         /* 4. the output parameter */
+-        type = new ParameterTypeCategory(PARAMETER_TARGET_TIME_ZONE,
++        type = new ParameterTypeStringCategory(PARAMETER_TARGET_TIME_ZONE,
+                 "The time zone used to convert the datetime attributes",
+-                Tools.getAllTimeZones(), Tools.getPreferredTimeZoneIndex());
++                Tools.getAllTimeZones(),
++                Tools.getAllTimeZones()[Tools.SYSTEM_TIME_ZONE], true);
+         type.setExpert(false);
+         types.add(type);
+ 
+Index: src/com/rapidminer/tools/octave/manager/OctaveConnectionManager.java
+===================================================================
+--- src/com/rapidminer/tools/octave/manager/OctaveConnectionManager.java	(revision 100)
++++ src/com/rapidminer/tools/octave/manager/OctaveConnectionManager.java	(working copy)
+@@ -35,6 +35,8 @@
+ package com.rapidminer.tools.octave.manager;
+ 
+ import java.io.File;
++import java.io.IOException;
++import java.io.Writer;
+ import java.util.Arrays;
+ import java.util.concurrent.ExecutionException;
+ import java.util.concurrent.Future;
+@@ -203,6 +205,46 @@
+         // p.shutdown();
+         // System.out.println("closed engine successfully");
+ 
++        // for debug
++        // try {
++            // factory.setOctaveInputLog(new FileWriter(new File(
++            // "C:\\tempOctaveStdIn.log")));
++            factory.setOctaveInputLog(new Writer() {
++
++                // StringBuffer sb;
++
++                @Override
++                public void close() throws IOException {
++                    // sb = null;
++                }
++
++                @Override
++                public void flush() throws IOException {
++                    // if (log.isTraceEnabled()) {
++                    // log.trace(sb.toString());
++                    // }
++
++                }
++
++                @Override
++                public void write(char[] arg0, int arg1, int arg2)
++                        throws IOException {
++                    // if (sb == null) {
++                    // sb = new StringBuffer();
++                    // }
++                    // if (log.isTraceEnabled()) {
++                    // sb.append(arg0);
++                    // }
++                    System.out.print(arg0);
++                }
++            }
++
++            );
++//        } catch (IOException e) {
++//            // TODO Auto-generated catch block
++//            e.printStackTrace();
++//        }
++
+     }
+ 
+     // /**
+Index: src/com/rapidminer/tools/octave/manager/ThreadSafeSimpleOctaveEngineProxy.java
+===================================================================
+--- src/com/rapidminer/tools/octave/manager/ThreadSafeSimpleOctaveEngineProxy.java	(revision 100)
++++ src/com/rapidminer/tools/octave/manager/ThreadSafeSimpleOctaveEngineProxy.java	(working copy)
+@@ -139,7 +139,7 @@
+ 
+         // 2. A writer that writes in log4j instead of sysout
+         Writer writer = createLog4jWriter(engineName);
+-        internalEngine.setErrorWriter(writer);
++        // internalEngine.setErrorWriter(writer);
+         internalEngine.setWriter(writer);
+ 
+         // 3. We force octave to start. This takes time but it will not be
+Index: src/com/rapidminer/tools/octave/ToolsPP.java
+===================================================================
+--- src/com/rapidminer/tools/octave/ToolsPP.java	(nonexistent)
++++ src/com/rapidminer/tools/octave/ToolsPP.java	(working copy)
+@@ -0,0 +1,94 @@
++package com.rapidminer.tools.octave;
++
++import java.util.Arrays;
++import java.util.List;
++import java.util.TimeZone;
++
++import org.apache.commons.lang.StringUtils;
++
++import com.rapidminer.operator.Operator;
++import com.rapidminer.operator.UserError;
++import com.rapidminer.parameter.ParameterType;
++import com.rapidminer.parameter.ParameterTypeCategory;
++import com.rapidminer.parameter.ParameterTypeStringCategory;
++import com.rapidminer.tools.Tools;
++
++/**
++ * Utility class to manage editable timezone parameters
++ *
++ * @author Sylvain Marié
++ *
++ */
++public class ToolsPP {
++
++    /**
++     * Utility method to retrieve a timezone from an editable
++     * ParameterTypeStringCategory parameter, with validation and appropriate
++     * user error if required. It contains code to handle legacy fields that
++     * would have changed from ParameterTypeCategory (stored as an index) to
++     * ParameterTypeStringCategory (stored as a string)
++     *
++     * @param operator
++     * @param parameterName
++     * @return
++     * @throws UserError
++     */
++    public static TimeZone getTimeZoneFromEditableParameter(Operator operator,
++            String parameterName) throws UserError {
++
++        if (operator != null && parameterName != null) {
++            List<String> allTimeZones = Arrays.asList(Tools.getAllTimeZones());
++
++            if (allTimeZones != null && !allTimeZones.isEmpty()) {
++
++                ParameterType param = operator.getParameterType(parameterName);
++                if (param instanceof ParameterTypeCategory) {
++                    // the parameter value is an integer
++                    return Tools.getTimeZone(operator
++                            .getParameterAsInt(parameterName));
++
++                } else if (param instanceof ParameterTypeStringCategory) {
++                    // the parameter value is a string
++                    String selectedTimeZone = operator
++                            .getParameter(parameterName);
++
++                    int idx;
++
++                    // // however sometimes a legacy version was a
++                    // // ParameterTypeCategory so it is an int
++                    // try {
++                    // idx = Integer.parseInt(selectedTimeZone);
++                    // // this is not normal
++                    // operator.logWarning("The timezone is still configured as an integer in the process... "
++                    // +
++                    // "this is not normal, save your process again and check the timezone parameter");
++                    // } catch (NumberFormatException e) {
++                    // // this is normal
++                    // }
++
++                    idx = allTimeZones.indexOf(selectedTimeZone);
++                    if (idx >= 0)
++                        return Tools.getTimeZone(idx);
++
++                    // if we reach this point, the timezone has not been found
++                    throw new UserError(operator,
++                            "filegoodies.timezone_usererror", selectedTimeZone,
++                            StringUtils.replace(parameterName, "_", " "));
++                }
++
++                // parameterType is not handled
++                throw new IllegalArgumentException(
++                        "Parameter "
++                                + parameterName
++                                + " is not of type ParameterTypeCategory or ParameterTypeStringCategory");
++
++            } else {
++                // no timezone is known in the Tools class
++                return null;
++            }
++        } else {
++            // operator or parametername is null
++            return null;
++        }
++    }
++}

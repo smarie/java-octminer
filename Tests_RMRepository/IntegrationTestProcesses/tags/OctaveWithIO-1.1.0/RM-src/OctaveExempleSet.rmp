@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.1.017">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.1.017" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="359" width="624">
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="TestRolewithStruct" width="90" x="45" y="30">
+        <parameter key="script" value="addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;&#10;&#10;load(&quot;D:\\code\\DataMining\\RapidMinerRepository\\6. Octave extension\\OctaveWithIO\\trunk\\Ds.mat&quot;);&#10;[OutputCell]=ConverStructeToCell(D);&#10;[name1 role1 data varargout]=GetDataFromCell(OutputCell);&#10;CellData= MakeDataToStruct(data,name1,role1,varargout);&#10;Out=CellData;"/>
+        <list key="inputs"/>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.1.001" expanded="true" height="76" name="TestRolewithCell" width="90" x="179" y="30">
+        <parameter key="script" value="addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\main\\m&quot;);&#10;&#10;&#10;&#10;Out=In;&#10;&#10;"/>
+        <list key="inputs">
+          <parameter key="In" value="cell"/>
+        </list>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <connect from_op="TestRolewithStruct" from_port="output 1" to_op="TestRolewithCell" to_port="input 1"/>
+      <connect from_op="TestRolewithCell" from_port="output 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.2.008">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.2.008" expanded="true" name="Process">
+    <description>% add the path to m files
+addpath("&lt;Current_Directory&gt;//..//m-files/");
+
+% call the function defined in your m-file (all octave functions may be used as well)
+disp("Calling foobar to create Out")
+Out = foobar(In_B);
+
+% create a new attribute using Octave matrix manipulation simplicity
+disp("Modifying In_A : adding a strange weight attribute")
+In_A.name{1,4}="new";
+In_A.role{1,4}="weight";
+In_A.data(:,4) = In_A.data(:,2)+(1:size(In_A.data,1))';
+In_A.levelname{1,4}=[];</description>
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <parameter key="parallelize_main_process" value="false"/>
+    <process expanded="true" height="308" width="592">
+      <operator activated="true" class="generate_data" compatibility="5.2.008" expanded="true" height="60" name="ExampleSetGenerator" width="90" x="45" y="30">
+        <parameter key="target_function" value="sinc"/>
+        <parameter key="number_examples" value="10"/>
+        <parameter key="number_of_attributes" value="2"/>
+        <parameter key="attributes_lower_bound" value="-10.0"/>
+        <parameter key="attributes_upper_bound" value="10.0"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="datamanagement" value="0"/>
+      </operator>
+      <operator activated="true" class="generate_data" compatibility="5.2.008" expanded="true" height="60" name="ExampleSetGenerator (2)" width="90" x="45" y="120">
+        <parameter key="target_function" value="sinc"/>
+        <parameter key="number_examples" value="10"/>
+        <parameter key="number_of_attributes" value="2"/>
+        <parameter key="attributes_lower_bound" value="-10.0"/>
+        <parameter key="attributes_upper_bound" value="10.0"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="datamanagement" value="0"/>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="2.0.003" expanded="true" height="94" name="OctaveScript" width="90" x="272" y="90">
+        <parameter key="script" value="%% ================= New octave script ===================&#10;%&#10;% Useful properties: &lt;UUID&gt;, &lt;Current_Directory&gt;, &lt;Rapidminer_Directory&gt; &#10;% Useful commands: &#10;% * save(&quot;-v7&quot;,&quot;&lt;Current_Directory&gt;\\test.mat&quot;,&quot;VariableName&quot;);&#10;% * addpath(&quot;&lt;Current_Directory&gt;\\myFunction.m&quot;);&#10;% &#10;% * [encodedData name role levels]=openExampleSet(Input);&#10;% * StructOutput= createStructExampleSet(encodedData,name,role,levels);&#10;% * CellOutput= createCellExampleSet(encodedData,name,role,levels);&#10;% &#10;%% ================ (enter your code below) ============ &#10;&#10;% add the path to m files&#10;addpath(&quot;&lt;Current_Directory&gt;//..//m-files/&quot;);&#10;&#10;% call the function defined in your m-file (all octave functions may be used as well)&#10;disp(&quot;Calling foobar to create Out&quot;)&#10;Out = foobar(A);"/>
+        <list key="inputs">
+          <parameter key="A" value="cell"/>
+          <parameter key="B" value="struct"/>
+        </list>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <connect from_op="ExampleSetGenerator" from_port="output" to_op="OctaveScript" to_port="input 1"/>
+      <connect from_op="ExampleSetGenerator (2)" from_port="output" to_op="OctaveScript" to_port="input 2"/>
+      <connect from_op="OctaveScript" from_port="output 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

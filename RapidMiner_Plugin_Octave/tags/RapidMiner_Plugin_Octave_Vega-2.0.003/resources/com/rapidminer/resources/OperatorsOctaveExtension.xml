@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<operators name="octave" version="5.0" docbundle="com/rapidminer/resources/i18n/OperatorsDocOctaveExtension">
+      <!--
+      This is a template for the operator specification. The above link to the doc bundle points to an i18n resource, which gives the description in various languages. <group
+      key=""> <group key="data_transformation"> <group key="attribute_space_transformation"> <group key="generation"> <operator> <key>generate_extract</key>
+      <class>com.rapidminer.operator.features.construction.TextInformationExtractionOperator</class> <replaces>TextInformationExtraction</replaces> </operator> </group> </group>
+      <group key="utility"> <group key="files"> <icon>floppy_disk.png</icon> <operator> <key>split_file_by_content</key>
+      <class>com.rapidminer.operator.text.io.segmenter.FileSegmentingOperator</class> <replaces>FileSegmenter</replaces> </operator> <operator> <key>split_file_by_point</key>
+      <class>com.rapidminer.operator.text.io.segmenter.FileSplittingOperator</class> <replaces>FileSplitter</replaces> </operator> </group> </group> </group> </group>
+   -->
+   <group key="octave">
+      <operator>
+         <key>octave_script_op</key>
+         <class>com.rapidminer.operator.octave.OctaveScriptOperator</class>
+         <icon>octave.png</icon>
+      </operator>
+   </group>
+   <!-- TODO when we will want to be able to generate operators automatically from defaultOperators.xml -->
+   <!--factory>com.rapidminer.operator.octave.OctaveOperatorFactory</factory-->
+   
+</operators>

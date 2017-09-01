@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="RapidMiner_Plugin_Octave_Vega_SupportFunctions" default="zip" basedir=".">
+    
+	<property file="build.properties" />
+
+    <property name="project-name" value="${ant.project.name}" />
+	<property name="extension.dir" value="../RapidMiner_Plugin_Octave_Vega"/>
+    <property name="folder-to-zip" value="src/main" />
+	<property name="output" value="target"/>
+
+	<!-- ================================= 
+			      targets: clean and create              
+			================================= -->
+		<target name="clean">
+			<delete dir="${output}" />
+		</target>
+
+		<target name="create" depends="clean">
+			<mkdir dir="${output}" />
+		</target>
+
+	<!-- ================================= 
+				      target: zip     
+				================================= -->
+    <target name="zip" depends="create">
+        <zip destfile="${output}/${project-name}-${version}.zip" basedir="${folder-to-zip}" excludes="dont*.*" />
+    </target>
+	
+	<!-- ================================= 
+		          target: deploy .        
+		   ================================= -->
+		<target name="deploy" depends="zip" description="Deploys the zip to the Octave extension source folder to replace previously used one.">
+			<delete>
+				<fileset dir="${extension.dir}/resources">
+				    <include name="${project-name}-*.zip"/>
+					<include name="supportfunctions.version"/>
+				</fileset>
+			</delete>
+			
+			<copy todir="${extension.dir}/resources" file="${output}/${project-name}-${version}.zip"/>
+			<copy file="build.properties" tofile="${extension.dir}/resources/supportfunctions.version"/>
+		</target>
+
+</project>

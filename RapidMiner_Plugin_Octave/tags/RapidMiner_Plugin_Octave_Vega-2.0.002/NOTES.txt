@@ -1,0 +1,1 @@
+Properties  <Current_Directory> and <Rapidminer_Directory> are not correctly handled by RA.

@@ -1,0 +1,2 @@
+del "D:\eclipse_workspace\RapidMiner_Plugin_Octave_Vega\lib\javaoctave-HACKED-*.jar"
+copy "D:\eclipse_workspace\JavaOctaveHacked\javaoctave-HACKED-*.jar" "D:\eclipse_workspace\RapidMiner_Plugin_Octave_Vega\lib"

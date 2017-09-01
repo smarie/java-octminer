@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.1.017">
+  <context>
+    <input>
+      <location>../RM-test-data/Test.csv_blob</location>
+    </input>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.1.017" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="404" width="599">
+      <operator activated="true" class="read_csv" compatibility="5.1.017" expanded="true" height="60" name="Read CSV" width="90" x="45" y="30">
+        <parameter key="csv_file" value="D:\code\DataMining\RapidMinerRepository\6. Octave extension\OctaveWithIO\trunk\RM-test-data\Generated-data.csv"/>
+        <parameter key="column_separators" value=";"/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character_for_quotes" value="\"/>
+        <parameter key="skip_comments" value="false"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="date_format" value=""/>
+        <parameter key="first_row_as_names" value="false"/>
+        <list key="annotations">
+          <parameter key="0" value="Name"/>
+        </list>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="A.true.integer.attribute"/>
+          <parameter key="1" value="B.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="true"/>
+        <parameter key="datamanagement" value="double_array"/>
+      </operator>
+      <operator activated="true" class="multiply" compatibility="5.1.017" expanded="true" height="112" name="Multiply" width="90" x="179" y="30"/>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.0.001" expanded="true" height="130" name="OctaveScript" width="90" x="353" y="136">
+        <parameter key="script" value="%Input1;&#10;%Input2;&#10;&#10;&#10;source(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\test\\m\\dummyFunctionTest.m&quot;)&#10;&#10;data1=Input1.data{1}(1:100,:);&#10;Input2.data={data1};&#10;&#10;sigma=0.2;&#10;nbapp=100;&#10;nbtest=100;&#10;&#10;nbapp=round(nbapp/2);&#10;nbtest=round(nbtest/2);   &#10;&#10;x1=sigma*randn(1,nbapp)+0.3;&#10;x2=sigma*randn(1,nbapp)-0.3;&#10;y1=sigma*randn(1,nbapp)+0.5;&#10;y2=sigma*randn(1,nbapp)-0.5;&#10;&#10;xapp=[x1 x2; y1 y2]';&#10;yapp=[ones(1,nbapp) -ones(1,nbapp)]';&#10;&#10;x1=sigma*randn(1,nbtest)+0.3;&#10;x2=sigma*randn(1,nbtest)-0.3;&#10;y1=sigma*randn(1,nbtest)+0.5;&#10;y2=sigma*randn(1,nbtest)-0.5;&#10;&#10;xtest=[x1 x2; y1 y2]';&#10;ytest=[ones(1,nbtest) -ones(1,nbtest)]';&#10;&#10;Data.name=cell(1,1);&#10;Data.name{1}={&quot;x&quot;,&quot;y&quot;,&quot;label&quot;};&#10;Data.role=cell(1,1);&#10;&#10;Data.role{1}={&quot;a&quot;,&quot;b&quot;,&quot;c&quot;};&#10;Data.data={[xapp,yapp]};&#10;&#10;Output=Input2;&#10;&#10;Output1=Input1;&#10;&#10;Output2=Data;&#10;&#10;&#10;D=Data;&#10;test=D.data{1}(:,1:2)-5;&#10;test2=D.data{1}(:,end);&#10;D.data={[test-5 test2]};&#10;&#10;Output3=D;&#10;&#10;&#10;TestCell=cell(3,4)&#10;&#10;&#10;TestCell(1,1)=&quot;Total&quot;&#10;TestCell(1,2)=&quot;Prix&quot;&#10;TestCell(1,3)=&quot;Nomre&quot;&#10;TestCell(1,4)=&quot;Reduit&quot;&#10;&#10;&#10;TestCell(2,1)=&quot;a&quot;&#10;TestCell(2,2)=&quot;b&quot;&#10;TestCell(2,3)=&quot;c&quot;&#10;TestCell(2,4)=&quot;d&quot;&#10;TestCell(3,1)=randn(5,1)&#10;TestCell(3,2)=randn(5,1)&#10;TestCell(3,3)=randn(5,1)&#10;TestCell(3,4)=randn(5,1)&#10;&#10;Output3=TestCell"/>
+        <enumeration key="inputs">
+          <parameter key="name_of_variable" value="Input1"/>
+          <parameter key="name_of_variable" value="Input2"/>
+        </enumeration>
+        <list key="results">
+          <parameter key="Output" value="Data Table"/>
+          <parameter key="Output1" value="Data Table"/>
+          <parameter key="Output2" value="Data Table"/>
+          <parameter key="Output3" value="Data Table"/>
+        </list>
+        <parameter key="octave_type" value="struct"/>
+      </operator>
+      <connect from_op="Read CSV" from_port="output" to_op="Multiply" to_port="input"/>
+      <connect from_op="Multiply" from_port="output 1" to_port="result 1"/>
+      <connect from_op="Multiply" from_port="output 2" to_op="OctaveScript" to_port="input 1"/>
+      <connect from_op="Multiply" from_port="output 3" to_op="OctaveScript" to_port="input 2"/>
+      <connect from_op="OctaveScript" from_port="output 1" to_port="result 2"/>
+      <connect from_op="OctaveScript" from_port="output 2" to_port="result 3"/>
+      <connect from_op="OctaveScript" from_port="output 3" to_port="result 4"/>
+      <connect from_op="OctaveScript" from_port="output 4" to_port="result 5"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+      <portSpacing port="sink_result 5" spacing="0"/>
+      <portSpacing port="sink_result 6" spacing="0"/>
+    </process>
+  </operator>
+</process>

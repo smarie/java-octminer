@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<operatorHelp lang="en_EN">
+	<group>
+		<key>octave</key>
+		<name>Octave extension operators</name>
+	</group>
+	<operator>
+		<key>octave_script_op</key>
+		<shortName>OctaveScript</shortName>
+		<name>Octave Script Operator</name>
+		<synopsis>Allows to execute an Octave script.
+		</synopsis>
+		<help>
+			&lt;p&gt;You can write any Octave code in the operator script.
+			&lt;br/&gt;&lt;br/&gt;
+			The input exampleSets are translated either
+			into a structure
+			or into a cell, according to the input type
+			parameter. Output
+			exampleSets are translated back automatically if
+			they are of one of
+			the two formats.
+			&lt;br/&gt;&lt;br/&gt;
+			In order to
+			be able to call m-files, you
+			might want to either use
+			&lt;i&gt;addpath()&lt;/i&gt; + any
+			function name (recommended) in your
+			script.
+			Or alternatively use
+			&lt;i&gt;source()&lt;/i&gt; (not
+			recommended).
+			&lt;br/&gt;&lt;br/&gt;
+			It is also recommended that you
+			clean any output variable before using it, using &lt;i&gt;clean
+			outVariableName&lt;/i&gt;
+			&lt;br/&gt;&lt;br/&gt;
+			Additionally you may
+			now use
+			the
+			&lt;b&gt;&amp;lt;UUID&amp;gt;&lt;/b&gt; special tag
+			in your
+			variable names
+			so
+			that a unique identifier is
+			generated at each call of
+			the operator.
+			This is useful when several
+			operators use the same octave
+			engine and
+			manipulate the same variable
+			names...
+			&lt;br/&gt;
+			Two other
+			special tags are
+			usable :
+			&lt;b&gt;&amp;lt;Rapidminer_Directory&amp;gt;&lt;/b&gt; and
+			&lt;b&gt;&amp;lt;Current_Directory&amp;gt;&lt;/b&gt; which is the
+			directory where the
+			current
+			process lies, or if it is not a file
+			(DBrepository), a new
+			created
+			directory under
+			&lt;i&gt;user.home&lt;/i&gt;. You may for example use this
+			directory
+			to
+			save variables as .mat for future work directly in
+			octave/matlab.
+			&lt;br/&gt;&lt;br/&gt;
+			Zhang, Y.,
+			and Marié, S.,
+			(2012). &lt;/p&gt;
+		</help>
+	</operator>
+</operatorHelp>

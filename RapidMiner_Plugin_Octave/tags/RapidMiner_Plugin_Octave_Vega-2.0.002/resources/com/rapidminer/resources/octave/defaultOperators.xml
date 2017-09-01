@@ -1,0 +1,67 @@
+
+<!-- This is the configuration file for the automatic creation of a lot of 
+	octave operators, like in the R extension. Each operator is described in 
+	XML, and the Octave code is included. When the Octave extension starts, the 
+	OctaveOperatorFactory.registerOperators method is called. In this method, 
+	this XML file is parsed and for each entry, an instance of GenericOctaveOperator 
+	will be created (TODO). Note: this is deactivated right now. To activate 
+	it, edit "OperatorsOctaveExtension.xml" -->
+
+<octaveoperators>
+	<learner name="octave.classification.dummy">
+		<parameters>
+			<parameter-category key="loss_function"
+				description="Determines the loss function used for boosting."
+				default="exponential">
+				<value>exponential</value>
+				<value>logistic</value>
+			</parameter-category>
+			<parameter-category key="type"
+				description="Determines the type of boosting." default="gentle">
+				<value>discrete</value>
+				<value>real</value>
+				<value>gentle</value>
+			</parameter-category>
+			<parameter-int key="iterations" description="The number of boosting iterations."
+				min="2" default="50" optional="false" expert="false" />
+			<parameter-double key="shrinkage" description="Shrinkage parameter."
+				min="0" default="1" />
+		</parameters>
+		<!-- This is the code for the learning of the model. The train data is 
+			delivered as variable called "rm.data.train". The label and the weight attribute 
+			are called "rm.data.train.label", respectively "rm.data.train.weight". Weights 
+			may not be defined! The resulting model must be saved as "rm.data.model". -->
+		<code>
+			library(mlr)
+			if (exists("rm.data.train.weight"))
+			ct &lt;-
+			make.task(data = rm.data.train, target = rm.data.train.label,
+			excluded = rm.data.train.weight, weights = rm.data.train.weight)
+			if
+			(!exists("rm.data.train.weight"))
+			ct &lt;- make.task(data =
+			rm.data.train, target = rm.data.train.label)
+
+			rm.data.model &lt;-
+			train("classif.add", ct, par.vals =list(loss =
+			rm.param.loss_function, type=rm.param.type, iter=rm.param.iterations,
+			nu=rm.param.shrinkage))
+		</code>
+		<!-- This is the code for applying the model on a new data set. This data 
+			frame has already been ensured, that the signature is exactly equal to what 
+			has been delivered above. The data us delivered in "rm.data.apply", while 
+			the model is stored in "rm.data.model". The results have to be stored in 
+			"rm.data.result". -->
+		<apply>
+			library(mlr)
+			rm.data.result &lt;-
+			as.data.frame(predict(rm.data.model, newdata = rm.data.apply,
+			type="prob"))
+		</apply>
+		<capabilities>
+			<capability>NUMERICAL_ATTRIBUTES</capability>
+			<capability>BINOMINAL_LABEL</capability>
+		</capabilities>
+	</learner>
+
+</octaveoperators>

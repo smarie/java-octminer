@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<operatorHelp lang="en_EN">
+	<group>
+		<key>octave</key>
+		<name>Octave extension operators</name>
+	</group>
+	<operator>
+		<key>octave_script_op</key>
+		<shortName>OctaveScript</shortName>
+		<name>Octave Script Operator</name>
+		<synopsis>Allows to execute an octave script.
+		</synopsis>
+		<help>
+		    &lt;p&gt;You can write any octave code in the operator script.
+			The input exampleSets are translated either into a structure or into
+			a cell, according to the parameter. Output exampleSets are translated
+			back automatically if they are of one of the two formats. In order to
+			be able to call m-files, you
+			might want to either use addpath() + any
+			function name (recommended).
+			Or alternatively use source().
+			&lt;br/&gt;
+			Additionally you may now use the &amp;lt;UUID&amp;gt; special tag
+			at the end of your variable names so that a unique identifier is
+			generated. This is useful when several operators use the same octave
+			engine but manipulate the same variable names...
+			&lt;br/&gt;
+			Two other
+			variables are usable : &amp;lt;Rapidminer_Directory&amp;gt; and
+			&amp;lt;Current_Directory&amp;gt; which is the directory where the current
+			process lies, or if it is not a file (DBrepository), a new created
+			directory under user.home. You may for example use this directory to
+			save variables as .mat for future work directly in octave/matlab.
+			&lt;br/&gt;
+			Zhang, Y.,
+			and Marié, S.,
+			(2012). &lt;/p&gt; 
+	   </help>
+	</operator>
+</operatorHelp>

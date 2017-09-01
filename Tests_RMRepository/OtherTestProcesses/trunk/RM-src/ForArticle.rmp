@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.2.006">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.2.006" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <parameter key="parallelize_main_process" value="false"/>
+    <process expanded="true" height="341" width="570">
+      <operator activated="true" class="subprocess" compatibility="5.2.006" expanded="true" height="94" name="Multiple io test" width="90" x="112" y="30">
+        <parameter key="parallelize_nested_chain" value="false"/>
+        <process expanded="true" height="409" width="592">
+          <operator activated="true" class="generate_data" compatibility="5.2.006" expanded="true" height="60" name="Generate Data" width="90" x="112" y="75">
+            <parameter key="target_function" value="random"/>
+            <parameter key="number_examples" value="5"/>
+            <parameter key="number_of_attributes" value="3"/>
+            <parameter key="attributes_lower_bound" value="-1.0"/>
+            <parameter key="attributes_upper_bound" value="1.0"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="datamanagement" value="double_array"/>
+          </operator>
+          <operator activated="true" class="generate_data" compatibility="5.2.006" expanded="true" height="60" name="Generate Data (2)" width="90" x="179" y="210">
+            <parameter key="target_function" value="random"/>
+            <parameter key="number_examples" value="5"/>
+            <parameter key="number_of_attributes" value="3"/>
+            <parameter key="attributes_lower_bound" value="-1.0"/>
+            <parameter key="attributes_upper_bound" value="1.0"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="datamanagement" value="double_array"/>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.4.001" expanded="true" height="94" name="OctaveScript (3)" width="90" x="362" y="94">
+            <parameter key="script" value="A&#10;B&#10;"/>
+            <list key="inputs">
+              <parameter key="A" value="cell"/>
+              <parameter key="B" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="B" value="Data Table"/>
+              <parameter key="A" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_op="Generate Data" from_port="output" to_op="OctaveScript (3)" to_port="input 1"/>
+          <connect from_op="Generate Data (2)" from_port="output" to_op="OctaveScript (3)" to_port="input 2"/>
+          <connect from_op="OctaveScript (3)" from_port="output 1" to_port="out 1"/>
+          <connect from_op="OctaveScript (3)" from_port="output 2" to_port="out 2"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+          <portSpacing port="sink_out 3" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.4.001" expanded="true" height="76" name="Strange output bug" width="90" x="179" y="165">
+        <parameter key="script" value="new.name={&quot;from&quot;,&quot;to&quot;}&#10;new.role={&quot;label&quot;,&quot;&quot;}&#10;new.data=[(-1:1)' (0:2)']&#10;new.levelname={{},{&quot;A&quot;;&quot;B&quot;;&quot;C&quot;}}&#10;StructDataT= MakeDataToStruct(new.data,new.name,new.role,new.levelname)"/>
+        <list key="inputs"/>
+        <list key="results">
+          <parameter key="new" value="Data Table"/>
+          <parameter key="StructDataT" value="Data Table"/>
+        </list>
+      </operator>
+      <connect from_op="Multiple io test" from_port="out 1" to_port="result 1"/>
+      <connect from_op="Multiple io test" from_port="out 2" to_port="result 2"/>
+      <connect from_op="Strange output bug" from_port="output 1" to_port="result 3"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
+    </process>
+  </operator>
+</process>

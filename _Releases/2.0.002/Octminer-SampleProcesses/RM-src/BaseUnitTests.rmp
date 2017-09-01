@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.1.017">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.1.017" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="resultfile" value="D:\documents and Settings\SESA240612\yyted"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <parameter key="parallelize_main_process" value="false"/>
+    <process expanded="true" height="361" width="567">
+      <operator activated="true" class="generate_data" compatibility="5.1.017" expanded="true" height="60" name="Generate Data" width="90" x="45" y="120">
+        <parameter key="target_function" value="random"/>
+        <parameter key="number_examples" value="5"/>
+        <parameter key="number_of_attributes" value="2"/>
+        <parameter key="attributes_lower_bound" value="-1.0"/>
+        <parameter key="attributes_upper_bound" value="1.0"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="datamanagement" value="double_array"/>
+      </operator>
+      <operator activated="true" class="set_macros" compatibility="5.1.017" expanded="true" height="76" name="Version" width="90" x="179" y="30">
+        <list key="macros">
+          <parameter key="OctaveTestVersions" value="2.0.0"/>
+        </list>
+      </operator>
+      <operator activated="true" class="print_to_console" compatibility="5.1.017" expanded="true" height="76" name="Print to Console" width="90" x="313" y="30">
+        <parameter key="log_value" value="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Octave extension integration tests, version %{OctaveTestVersions} !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"/>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="94" name="throughput tests" width="90" x="179" y="120">
+        <parameter key="parallelize_nested_chain" value="false"/>
+        <process expanded="true" height="302" width="667">
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="InputCell" width="90" x="112" y="30">
+            <parameter key="script" value="%% ================= Part 1: Test the base IO - 1 ===================&#10;%&#10;% This operator octave will test the IO with data of cell arrays&#10;% In : RapidMiner ExampleSet input;&#10;% Out : RapidMiner ExampleSet Output;&#10;%&#10;&#10;disp('');&#10;disp(&quot;***************** [Part 1.1 -IO-1] Test Cell ExampleSet throughput *****************&quot;)&#10;&#10;Out=In;&#10;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="InputStruct" width="90" x="365" y="30">
+            <parameter key="script" value="%% ================= Part 1: Test the base IO - 2 ===================&#10;%&#10;% This operator octave will test the IO with data of Struct field&#10;% In : RapidMiner ExampleSet input;&#10;% Out : RapidMiner ExampleSet Output;&#10;%&#10;&#10;disp('');&#10;disp(&quot;***************** [Part 1.2 -IO-2] Test Struct ExampleSet throughput *****************&quot;)&#10;&#10;Out=In;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="InputCell" to_port="input 1"/>
+          <connect from_op="InputCell" from_port="output 1" to_op="InputStruct" to_port="input 1"/>
+          <connect from_op="InputStruct" from_port="output 1" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="source_in 3" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="76" name="manual creation tests" width="90" x="313" y="120">
+        <parameter key="parallelize_nested_chain" value="false"/>
+        <process expanded="true" height="321" width="667">
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="Create Cell Data" width="90" x="112" y="30">
+            <parameter key="script" value="%% ================= Part 2: Test the Octave data output - 1 ===================&#10;%&#10;% This octave operator will test that cell data which is created by Octave &#10;% in this octavescript can be outputted to RM as an exampleset.&#10;%&#10;% Note that this example contains nominal attributes too&#10;%&#10;disp('');&#10;disp(&quot;***************** [Part 2.1 - Output - Octave-created Cell ExampleSet] *****************&quot;)&#10;&#10;f=cell(3,2);&#10;f{1,1}='Q';&#10;f{1,2}='A';&#10;f{2,1}='id';&#10;f{2,2}='';&#10;f{3,1}={'a';'b';'c';'d';'e'};&#10;f{3,2}=[6:10]';&#10;&#10;Out=f;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="Create Struct test" width="90" x="380" y="30">
+            <parameter key="script" value="%% ================= Part 2: Test the Octave data output - 2 ===================&#10;%&#10;% This octave operator will test that struct data which is created by Octave &#10;% in this octavescript can be outputted to RM as an exampleset.&#10;%&#10;% Note that this example contains nominal attributes too&#10;%&#10;disp('');&#10;disp(&quot;***************** [Part 2.2 - Output - Octave-created Struct ExampleSet] *****************&quot;)&#10;&#10;new.name={&quot;from&quot;,&quot;to&quot;};&#10;new.role={&quot;id&quot;,&quot;&quot;};&#10;new.data=[(-1:1)' (1:3)'];&#10;new.levelname={{},{&quot;A&quot;;&quot;B&quot;;&quot;C&quot;}};&#10;&#10;Out = new ;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="Create Cell Data" to_port="input 1"/>
+          <connect from_op="Create Cell Data" from_port="output 1" to_op="Create Struct test" to_port="input 1"/>
+          <connect from_op="Create Struct test" from_port="output 1" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="save load tests" width="90" x="447" y="120">
+        <parameter key="script" value="%% ================= Part 3: Test the save and load  ===================&#10;%&#10;% This operator octave will try saving and loading the variable in a&#10;% .mat file&#10;%&#10;% In : RapidMiner ExampleSet input, struct type;&#10;% Out : RapidMiner ExampleSet Output;&#10;% The variable In will be save into the 'SaveTest.mat', we loading the file saved &#10;% set it to the output.&#10;%&#10;&#10;disp('')&#10;disp(&quot;************* [Part 3 - SL] Test: Save and load ******************&quot;)&#10;&#10;disp(&quot;--saving variable In as a MATLAB-compliant SaveTest.mat&quot;)&#10;save(&quot;-v7&quot;,&quot;&lt;Current_Directory&gt;\\SaveTest.mat&quot;,&quot;In&quot;);&#10;&#10;disp(&quot;--clearing the variable in Octave memory&quot;)&#10;clear&#10;&#10;disp(&quot;--loading In from SaveTest.mat&quot;)&#10;var=whos(&quot;-file&quot;, &quot;&lt;Current_Directory&gt;\\SaveTest.mat&quot;);&#10;load(&quot;&lt;Current_Directory&gt;\\SaveTest.mat&quot;, var(1).name);&#10;&#10;Out=In;&#10;disp(&quot;--cleaning file SaveTest.mat&quot;)&#10;unlink(&quot;&lt;Current_Directory&gt;\\SaveTest.mat&quot;)"/>
+        <list key="inputs">
+          <parameter key="In" value="struct"/>
+        </list>
+        <list key="results">
+          <parameter key="Out" value="Data Table"/>
+        </list>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="76" name="m support functions tests" width="90" x="45" y="255">
+        <parameter key="parallelize_nested_chain" value="false"/>
+        <process expanded="true" height="321" width="667">
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="TestStructFunctions" width="90" x="112" y="30">
+            <parameter key="script" value="%% ================= Part 4: The support function test - 1 ===================&#10;%&#10;% This octave operator will test that the support functions are available&#10;% and will use them to open and recreate the struct input&#10;%&#10;% this script uses 'openExampleSet' and 'createStructExampleSet' &#10;%&#10;&#10;disp('')&#10;disp(&quot;***************** [Part 4.1 - M-0] Check that the support functions are in path *****************&quot;)&#10;path()&#10;&#10;disp(&quot;***************** [Part 4.1 - M-1] Test opening the struct ExampleSet *****************&quot;)&#10;[encodedData name role levels]=openExampleSet(In);&#10;&#10;disp(&quot;***************** [Part 4.1 - M-2] Test recreating the struct *****************&quot;)&#10;StructData= createStructExampleSet(encodedData,name,role,levels);&#10;&#10;Out=StructData;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="TestCellFunctions" width="90" x="313" y="30">
+            <parameter key="script" value="%% ================= Part 4: The support function test - 2 ===================&#10;%&#10;% This octave operator will test that the support functions are available&#10;% and will use them to open and recreate the struct input&#10;%&#10;% this script uses 'openExampleSet' and 'createCellExampleSet' &#10;%&#10;disp('');&#10;disp(&quot;***************** [Part 4.2 - M-1] Test opening the cell ExampleSet *****************&quot;)&#10;[data name role levels]=openExampleSet(In);&#10;&#10;&#10;disp(&quot;***************** [Part 4.2 - M-2] Test recreating the cell *****************&quot;)&#10;CellData= createCellExampleSet(data, name ,role ,levels);&#10;&#10;Out=CellData;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="TestStructFunctions" to_port="input 1"/>
+          <connect from_op="TestStructFunctions" from_port="output 1" to_op="TestCellFunctions" to_port="input 1"/>
+          <connect from_op="TestCellFunctions" from_port="output 1" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="76" name="role tests" width="90" x="179" y="255">
+        <parameter key="parallelize_nested_chain" value="false"/>
+        <process expanded="true" height="381" width="667">
+          <operator activated="true" class="generate_attributes" compatibility="5.1.017" expanded="true" height="76" name="Generate Attributes" width="90" x="45" y="30">
+            <list key="function_descriptions">
+              <parameter key="3d" value="rand()"/>
+              <parameter key="4th" value="rand()"/>
+              <parameter key="5th" value="rand()"/>
+              <parameter key="6th" value="rand()"/>
+              <parameter key="7th" value="rand()"/>
+            </list>
+            <parameter key="use_standard_constants" value="true"/>
+            <parameter key="keep_all" value="true"/>
+          </operator>
+          <operator activated="true" class="set_role" compatibility="5.1.017" expanded="true" height="76" name="Set Role" width="90" x="179" y="30">
+            <parameter key="name" value="3d"/>
+            <parameter key="target_role" value="label"/>
+            <list key="set_additional_roles">
+              <parameter key="4th" value="prediction"/>
+              <parameter key="5th" value="cluster"/>
+              <parameter key="6th" value="weight"/>
+              <parameter key="7th" value="batch"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="RolesInputStruct" width="90" x="45" y="165">
+            <parameter key="script" value="%% ================= Part 5: The role type test - 1 ===================&#10;%&#10;% This Octave operator throughputs the input that has several roles.&#10;%&#10;&#10;disp('')&#10;disp(&quot;********** [Part 5.1 - Role-1] Test Struct data throughput ***************&quot;)&#10;&#10;Out=In;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="RolesInputCell" width="90" x="179" y="165">
+            <parameter key="script" value="%% ================= Part 5: The role type test - 1 ===================&#10;%&#10;% This Octave operator throughputs the input that has several roles.&#10;%&#10;&#10;disp('')&#10;disp(&quot;********** [Part 5.1 - Role-1] Test Cell data throughput ***************&quot;)&#10;&#10;Out=In;"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="ManualRoleChangeStruct" width="90" x="313" y="165">
+            <parameter key="script" value="%% ================= Part 5: The role type test - 3 ===================&#10;%&#10;% This operator octave will test that the roles can be changed manually.&#10;%&#10;disp('')&#10;disp(&quot;********** [Part 5.3-Role-3] Test changing roles ***************&quot;)&#10;&#10;clear Out&#10;&#10;Out.name = In.name;&#10;Out.role = In.role(end:-1:1);&#10;Out.data = In.data;&#10;Out.levelname = In.levelname;"/>
+            <list key="inputs">
+              <parameter key="In" value="struct"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="76" name="ManualRoleChangeCell" width="90" x="447" y="165">
+            <parameter key="script" value="%% ================= Part 5: The role type test - 4 ===================&#10;%&#10;% This operator octave will test that the roles can be changed manually.&#10;%&#10;disp('')&#10;disp(&quot;********** [Part 5.4-Role-4] Test changing roles on cell ***************&quot;)&#10;&#10;clear Out&#10;Out = In;&#10;Out(2,:) = Out(2,end:-1:1);"/>
+            <list key="inputs">
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Out" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="Generate Attributes" to_port="example set input"/>
+          <connect from_op="Generate Attributes" from_port="example set output" to_op="Set Role" to_port="example set input"/>
+          <connect from_op="Set Role" from_port="example set output" to_op="RolesInputStruct" to_port="input 1"/>
+          <connect from_op="RolesInputStruct" from_port="output 1" to_op="RolesInputCell" to_port="input 1"/>
+          <connect from_op="RolesInputCell" from_port="output 1" to_op="ManualRoleChangeStruct" to_port="input 1"/>
+          <connect from_op="ManualRoleChangeStruct" from_port="output 1" to_op="ManualRoleChangeCell" to_port="input 1"/>
+          <connect from_op="ManualRoleChangeCell" from_port="output 1" to_port="out 1"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="112" name="Multiple io test" width="90" x="313" y="210">
+        <parameter key="parallelize_nested_chain" value="false"/>
+        <process expanded="true" height="325" width="667">
+          <operator activated="true" class="generate_data" compatibility="5.1.017" expanded="true" height="60" name="Generate Data (2)" width="90" x="45" y="165">
+            <parameter key="target_function" value="random"/>
+            <parameter key="number_examples" value="10"/>
+            <parameter key="number_of_attributes" value="3"/>
+            <parameter key="attributes_lower_bound" value="-1.0"/>
+            <parameter key="attributes_upper_bound" value="1.0"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="datamanagement" value="double_array"/>
+          </operator>
+          <operator activated="true" class="generate_data" compatibility="5.1.017" expanded="true" height="60" name="Generate Data (3)" width="90" x="45" y="75">
+            <parameter key="target_function" value="random"/>
+            <parameter key="number_examples" value="5"/>
+            <parameter key="number_of_attributes" value="3"/>
+            <parameter key="attributes_lower_bound" value="-1.0"/>
+            <parameter key="attributes_upper_bound" value="1.0"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="datamanagement" value="double_array"/>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="112" name="Multi IO test" width="90" x="313" y="30">
+            <parameter key="script" value="%% ================= Part 6: The role type test - 1 ===================&#10;%&#10;% This operator octave will test the data with multiple input; &#10;%&#10;disp('');&#10;&#10;disp(&quot;***************** [Part 6 - Multiple IO-1] Test with different order *****************&quot;)&#10;A;&#10;B;&#10;In;"/>
+            <list key="inputs">
+              <parameter key="A" value="cell"/>
+              <parameter key="B" value="struct"/>
+              <parameter key="In" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="B" value="Data Table"/>
+              <parameter key="A" value="Data Table"/>
+              <parameter key="In" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_port="in 1" to_op="Multi IO test" to_port="input 1"/>
+          <connect from_op="Generate Data (2)" from_port="output" to_op="Multi IO test" to_port="input 3"/>
+          <connect from_op="Generate Data (3)" from_port="output" to_op="Multi IO test" to_port="input 2"/>
+          <connect from_op="Multi IO test" from_port="output 1" to_port="out 1"/>
+          <connect from_op="Multi IO test" from_port="output 2" to_port="out 2"/>
+          <connect from_op="Multi IO test" from_port="output 3" to_port="out 3"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+          <portSpacing port="sink_out 3" spacing="0"/>
+          <portSpacing port="sink_out 4" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="subprocess" compatibility="5.1.017" expanded="true" height="112" name="Miss Data test" width="90" x="447" y="210">
+        <parameter key="parallelize_nested_chain" value="false"/>
+        <process expanded="true" height="321" width="667">
+          <operator activated="true" class="generate_data" compatibility="5.1.017" expanded="true" height="60" name="Generate Data (4)" width="90" x="45" y="30">
+            <parameter key="target_function" value="square pulse function"/>
+            <parameter key="number_examples" value="100"/>
+            <parameter key="number_of_attributes" value="1"/>
+            <parameter key="attributes_lower_bound" value="-10.0"/>
+            <parameter key="attributes_upper_bound" value="10.0"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="datamanagement" value="double_array"/>
+          </operator>
+          <operator activated="true" class="declare_missing_value" compatibility="5.1.017" expanded="true" height="76" name="Declare Missing Value" width="90" x="180" y="30">
+            <parameter key="attribute_filter_type" value="all"/>
+            <parameter key="attribute" value=""/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="false"/>
+            <parameter key="include_special_attributes" value="true"/>
+            <parameter key="mode" value="numeric"/>
+            <parameter key="numeric_value" value="1.0"/>
+            <parameter key="expression_value" value=""/>
+          </operator>
+          <operator activated="true" class="octave:octave_script_op" compatibility="1.6.001" expanded="true" height="94" name="Missing data test" width="90" x="380" y="30">
+            <parameter key="script" value="%% ================= Part 7: The Missing data test  ===================&#10;%&#10;% This octave operator will test robustness to missing data.&#10;%&#10;%&#10;disp('');&#10;&#10;disp(&quot;********** [Part 7 - Miss-values] Test the data with missing values***************&quot;)&#10;&#10;Outmiss = Inmiss;&#10;Outoriginal = Inoriginal;"/>
+            <list key="inputs">
+              <parameter key="Inmiss" value="struct"/>
+              <parameter key="Inoriginal" value="cell"/>
+            </list>
+            <list key="results">
+              <parameter key="Outmiss" value="Data Table"/>
+              <parameter key="Outoriginal" value="Data Table"/>
+            </list>
+          </operator>
+          <connect from_op="Generate Data (4)" from_port="output" to_op="Declare Missing Value" to_port="example set input"/>
+          <connect from_op="Declare Missing Value" from_port="example set output" to_op="Missing data test" to_port="input 1"/>
+          <connect from_op="Declare Missing Value" from_port="original" to_op="Missing data test" to_port="input 2"/>
+          <connect from_op="Missing data test" from_port="output 1" to_port="out 1"/>
+          <connect from_op="Missing data test" from_port="output 2" to_port="out 2"/>
+          <portSpacing port="source_in 1" spacing="0"/>
+          <portSpacing port="source_in 2" spacing="0"/>
+          <portSpacing port="source_in 3" spacing="0"/>
+          <portSpacing port="source_in 4" spacing="0"/>
+          <portSpacing port="sink_out 1" spacing="0"/>
+          <portSpacing port="sink_out 2" spacing="0"/>
+          <portSpacing port="sink_out 3" spacing="0"/>
+        </process>
+      </operator>
+      <connect from_op="Generate Data" from_port="output" to_op="throughput tests" to_port="in 1"/>
+      <connect from_op="Version" from_port="through 1" to_op="Print to Console" to_port="through 1"/>
+      <connect from_op="Print to Console" from_port="through 1" to_op="throughput tests" to_port="in 2"/>
+      <connect from_op="throughput tests" from_port="out 1" to_op="manual creation tests" to_port="in 1"/>
+      <connect from_op="manual creation tests" from_port="out 1" to_op="save load tests" to_port="input 1"/>
+      <connect from_op="save load tests" from_port="output 1" to_op="m support functions tests" to_port="in 1"/>
+      <connect from_op="m support functions tests" from_port="out 1" to_op="role tests" to_port="in 1"/>
+      <connect from_op="role tests" from_port="out 1" to_op="Multiple io test" to_port="in 1"/>
+      <connect from_op="Multiple io test" from_port="out 1" to_op="Miss Data test" to_port="in 1"/>
+      <connect from_op="Multiple io test" from_port="out 2" to_op="Miss Data test" to_port="in 2"/>
+      <connect from_op="Multiple io test" from_port="out 3" to_op="Miss Data test" to_port="in 3"/>
+      <connect from_op="Miss Data test" from_port="out 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

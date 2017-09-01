@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.2.003">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.2.003" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <parameter key="parallelize_main_process" value="false"/>
+    <process expanded="true" height="422" width="599">
+      <operator activated="true" class="open_file" compatibility="5.2.003" expanded="true" height="60" name="Open File" width="90" x="45" y="30">
+        <parameter key="resource_type" value="file"/>
+        <parameter key="filename" value="D:\code\HOMES\SVN_homesanalytics\DataMining\RapidMinerRepository\0. Templates\RM-test-data\Test.csv"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="5.2.003" expanded="true" height="60" name="Store" width="90" x="246" y="30">
+        <parameter key="repository_entry" value="Test.csv_blob"/>
+      </operator>
+      <connect from_op="Open File" from_port="file" to_op="Store" to_port="input"/>
+      <connect from_op="Store" from_port="through" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

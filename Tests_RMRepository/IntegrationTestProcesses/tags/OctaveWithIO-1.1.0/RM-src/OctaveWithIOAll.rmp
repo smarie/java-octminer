@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.1.017">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.1.017" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true" height="384" width="642">
+      <operator activated="true" class="octave:octave_script_op" compatibility="1.0.001" expanded="true" height="76" name="OctaveScript" width="90" x="246" y="120">
+        <parameter key="script" value="addpath(&quot;D:\\eclipse_workspace\\RapidMiner_Plugin_Octave_Vega_Samples\\src\\test\\m&quot;);&#10;&#10;data=rand(5,5);&#10;&#10;Matrix = WD_computeCID(data);&#10;&#10;%[coord,indexPlot] = processIsomap(Matrix)&#10;&#10;StructData= MakeDataToStruct(Matrix);&#10;&#10;Output3=StructData;"/>
+        <enumeration key="inputs"/>
+        <list key="results">
+          <parameter key="Output3" value="Data Table"/>
+        </list>
+        <parameter key="octave_type" value="struct"/>
+      </operator>
+      <connect from_op="OctaveScript" from_port="output 1" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>

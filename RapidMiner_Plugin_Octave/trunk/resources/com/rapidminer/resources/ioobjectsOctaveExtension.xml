@@ -1,0 +1,10 @@
+<ioobjects>
+    <!-- Octave -->
+    <!-- ioobject
+        name="Octave result"
+        class="com.rapidminer.operator.learner.Octave.OctaveClassifier"
+        reportable="false">
+        <renderer>com.rapidminer.gui.renderer.DefaultTextRenderer</renderer>
+        <renderer>com.rapidminer.gui.renderer.OctaveRenderer</renderer>       
+    </ioobject-->     
+</ioobjects>

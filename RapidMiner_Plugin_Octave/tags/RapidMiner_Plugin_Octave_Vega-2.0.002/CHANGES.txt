@@ -1,0 +1,50 @@
+History of changes of the Octave extension for RapidMiner versions
+==================================================================
+
+Changes from Octave extension 1.5 to 1.6
+----------------------------------------
+
+* First public release [2012/07] on java.net
+* Fixed bugs and tested successfully on RapidAnalytics
+* Javadoc and license
+
+
+Changes from Octave extension 1.4 to 1.5
+----------------------------------------
+
+(copied from previous SVN log)
+
+- change startup menu
+- error message fixed
+- icon octave
+- structure of code
+- fix: Bug with metadata checking occuring when multiple inputs
+- Attemps to fix log bug in Rapidanalytics
+
+
+Changes from Octave extension 1.2 to 1.4
+----------------------------------------
+
+(copied from previous SVN log)
+
+General:
+- New version correctly handling multithread (concurrent access to 
+Octave engine), thanks to a pool of Octave Engines of configurable size.
+- The (m-files) SupportFunctions are now automatically installed in 
+<HOME_Directory>/RapidminerOctave and added to octave path at startup . 
+- Added configuration options for the octave engines
+(path for octave.exec, path for the support .m files, startup options) 
+
+OctaveOperator:
+- Added documentation for the OctaveScript operator
+- added the new <Current Directory> and <Rapidminer Directory> 
+property for save and load ;
+- Added an UUID for each run of an Octave Operator, 
+and the corresponding variable <UUID> can be used inside the OctaveScript 
+- Now correctly handling roles in data conversion
+
+
+Changes from Octave extension 0.1 to 1.2
+----------------------------------------
+
+(... in previous SVN log)
