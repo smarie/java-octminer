@@ -149,7 +149,7 @@ public final class OctaveEngine {
             //OctaveObject stack = lastError.get("stack");
             // size(e.stack)
             // e.stack(1) >
-            //          file = D:\documents and Settings\***REMOVED***\RapidminerOctave\RapidMiner_Plugin_Octave_Vega_SupportFunctions-2.0.0\m\openExampleSet.m
+            //          file = D:\documents and Settings\xxxxxx\RapidminerOctave\RapidMiner_Plugin_Octave_Vega_SupportFunctions-2.0.0\m\openExampleSet.m
             //			name = openExampleSet
             //			line =  49
             //			column =  42

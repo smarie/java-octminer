@@ -15,7 +15,7 @@
     <parameter key="parallelize_main_process" value="false"/>
     <process expanded="true" height="348" width="503">
       <operator activated="true" class="read_excel" compatibility="5.2.008" expanded="true" height="60" name="Read Excel" width="90" x="18" y="65">
-        <parameter key="excel_file" value="D:\documents and Settings\***REMOVED***\Desktop\NbData_new.xls"/>
+        <parameter key="excel_file" value="D:\documents and Settings\xxxxx\Desktop\NbData_new.xls"/>
         <parameter key="sheet_number" value="1"/>
         <parameter key="imported_cell_range" value="A1:A9"/>
         <parameter key="encoding" value="SYSTEM"/>
